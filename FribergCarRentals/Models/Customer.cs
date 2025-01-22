@@ -2,7 +2,7 @@
 
 namespace FribergCarRentals.Models
 {
-    public class User : Account
+    public class Customer : SystemUser
     {
         public List<Booking> Bookings { get; set; }
 

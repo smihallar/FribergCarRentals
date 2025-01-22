@@ -1,6 +1,6 @@
 ﻿namespace FribergCarRentals
 {
-    public abstract class Account
+    public abstract class SystemUser
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

@@ -2,9 +2,7 @@
 
 namespace FribergCarRentals.Models
 {
-    public class Admin : Account
+    public class Admin : SystemUser
     {
-      //Manage users
-      // manage bookings
     }
 }
