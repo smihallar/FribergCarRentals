@@ -1,0 +1,21 @@
+﻿@using FribergCarRentals.ViewModels
+@model LoginRegisterViewModel
+
+@{
+    ViewData["Title"] = "Logga in eller registrera dig för att boka en bil";
+}
+
+<div class="container mt-5">
+    <h2 class ="text-center">@ViewData["Title"]</h2>
+    <div class="row">
+      
+        @Html.Partial("LoginForm", Model.Login)
+
+        @Html.Partial("RegisterForm", Model.Register)
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

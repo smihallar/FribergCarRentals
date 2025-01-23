@@ -28,7 +28,6 @@
     <Folder Include="Views\Booking\" />
     <Folder Include="Views\Customer\" />
     <Folder Include="Views\Car\" />
-    <Folder Include="Views\LoginRegister\" />
   </ItemGroup>
 
 </Project>

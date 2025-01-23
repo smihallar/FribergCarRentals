@@ -37,20 +37,18 @@ namespace FribergCarRentals.Data
 
         public Customer GetByEmail(string email)
         {
-            var customer = applicationDbContext.Customers.FirstOrDefault(c => c.Email == email);
-            if (customer != null)
-            {
-                return customer;
-            }
+             return applicationDbContext.Customers.FirstOrDefault(c => c.Email == email);
+            
+               
+            
         }
 
         public Customer GetById(int id)
         {
-            var customer = applicationDbContext.Customers.FirstOrDefault(c => c.Id == id);
-            if (customer != null)
-            {
-                return customer;
-            }
+           return applicationDbContext.Customers.FirstOrDefault(c => c.Id == id);
+           
+                
+            
         }
 
         public void Delete(Customer customer)

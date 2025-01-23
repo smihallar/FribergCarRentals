@@ -1,0 +1,21 @@
+﻿@using FribergCarRentals.ViewModels
+@model LoginViewModel
+
+<div class="col-md-6">
+    <h4>Login</h4>
+    <form asp-action="Login" method="post">
+        <div class="form-group">
+            <label for="Login_Email">Email</label>
+            <input type="email" asp-for="Email" class="form-control" placeholder="Enter your email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="Login_Password">Password</label>
+            <input type="password" asp-for="Password" class="form-control" placeholder="Enter your password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Login</button>
+    </form>
+</div>
