@@ -1,36 +1,35 @@
 ﻿@using FribergCarRentals.ViewModels
 @model RegisterViewModel
 
-@if (ViewBag.LoginError != null)
-{
-    <div class="alert alert-danger">
-        @ViewBag.LoginError
-    </div>
-}
-<form asp-action="Register" asp-controller="LoginRegister" method="post">
-    <div class="form-group">
-        <label for="FirstName">First Name</label>
-        <input type="text" asp-for="FirstName" class="form-control" placeholder="Enter your first name" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-    </div>
+<div class="col-md-6">
+    <h4>Register</h4>
 
-    <div class="form-group">
-        <label for="LastName">Last Name</label>
-        <input type="text" asp-for="LastName" class="form-control" placeholder="Enter your last name" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
+   
+    <form asp-action="Register" asp-controller="LoginRegister" method="post">
+        <div class="form-group">
+            <label for="FirstName">First Name</label>
+            <input type="text" asp-for="FirstName" class="form-control" placeholder="Enter your first name" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label for="Email">Email</label>
-        <input type="email" asp-for="Email" class="form-control" placeholder="Enter your email" />
-        <span asp-validation-for="Email" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label for="LastName">Last Name</label>
+            <input type="text" asp-for="LastName" class="form-control" placeholder="Enter your last name" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
 
-    <div class="form-group">
-        <label for="Password">Password</label>
-        <input type="password" asp-for="Password" class="form-control" placeholder="Enter your password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+        <div class="form-group">
+            <label for="Register_Email">Email</label>
+            <input type="email" asp-for="Email" class="form-control" placeholder="Enter your email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-success mt-3">Register</button>
-</form>
+        <div class="form-group">
+            <label for="Register_Password">Password</label>
+            <input type="password" asp-for="Password" class="form-control" placeholder="Enter your password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Register</button>
+    </form>
+</div>

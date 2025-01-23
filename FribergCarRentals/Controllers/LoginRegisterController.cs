@@ -4,6 +4,7 @@ using FribergCarRentals.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
+using System.Diagnostics;
 
 namespace FribergCarRentals.Controllers
 {
@@ -20,7 +21,7 @@ namespace FribergCarRentals.Controllers
         public IActionResult Index()
         {
             var model = new LoginRegisterViewModel();
-            return View(model); 
+            return View(model);
         }
 
         // POST: Login
@@ -28,6 +29,14 @@ namespace FribergCarRentals.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Login(LoginRegisterViewModel model)
         {
+            //if (!ModelState.IsValid)
+            //{
+            //    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+            //    {
+            //        // Output the error messages to the debug console for troubleshooting
+            //        Debug.WriteLine($"ModelState Error: {error.ErrorMessage}");
+            //    }
+            //}
             if (ModelState.IsValid)
             {
                 var customer = customerRepository.GetByEmail(model.Login.Email);
@@ -40,10 +49,11 @@ namespace FribergCarRentals.Controllers
                 }
                 else
                 {
-                    ViewBag.LoginError = "Det fungerade tyvärr inte att logga in, försök igen!";
+                    ModelState.AddModelError("Login", "Invalid login credentials.");
                     return View("Index", model);
                 }
             }
+
             return View("Index", model);
         }
 
@@ -52,6 +62,7 @@ namespace FribergCarRentals.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Register(LoginRegisterViewModel model)
         {
+
             if (ModelState.IsValid)
             {
                 var existingCustomer = customerRepository.GetByEmail(model.Register.Email);
@@ -69,7 +80,7 @@ namespace FribergCarRentals.Controllers
                     Password = model.Register.Password
                 };
                 customerRepository.Add(newCustomer);
-                
+
                 HttpContext.Session.SetString("CustomerEmail", newCustomer.Email);
                 HttpContext.Session.SetInt32("CustomerId", newCustomer.Id);
 
@@ -77,7 +88,7 @@ namespace FribergCarRentals.Controllers
             }
             return View("Index", model);
         }// GET: LoginController
-       
+
 
         // GET: LoginController/Details/5
         public IActionResult Details(int id)
