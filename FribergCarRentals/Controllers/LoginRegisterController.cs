@@ -37,11 +37,11 @@ namespace FribergCarRentals.Controllers
                     HttpContext.Session.SetInt32("CustomerId", customer.Id);
 
                     return RedirectToAction("Index", "Booking");
-
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Det fungerade tyvärr inte att logga in, försök igen!");
+                    ViewBag.LoginError = "Det fungerade tyvärr inte att logga in, försök igen!";
+                    return View("Index", model);
                 }
             }
             return View("Index", model);
@@ -57,7 +57,7 @@ namespace FribergCarRentals.Controllers
                 var existingCustomer = customerRepository.GetByEmail(model.Register.Email);
                 if (existingCustomer != null)
                 {
-                    ModelState.AddModelError("Email", "Denna email är redan registrerad!");
+                    ViewBag.RegisterError = "Denna email är redan registrerad!";
                     return View("Index", model);
                 }
 
@@ -75,7 +75,7 @@ namespace FribergCarRentals.Controllers
 
                 return RedirectToAction("Index", "Home"); // ändra till bokningssidan.
             }
-            return View("Index", "Home");
+            return View("Index", model);
         }// GET: LoginController
        
 
