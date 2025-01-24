@@ -4,7 +4,7 @@ namespace FribergCarRentals.Data
 {
     public interface IAdminRepository
     {
-        Admin GetById(int id);
+        Admin GetByEmail(string email);
         IEnumerable<Admin> GetAll();
     }
 }

@@ -1,4 +1,6 @@
-﻿using FribergCarRentals.Data;
+﻿using AspNetCoreGeneratedDocument;
+using FribergCarRentals.Data;
+using FribergCarRentals.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,9 +17,46 @@ namespace FribergCarRentals.Controllers
         // GET: AdminController
         public ActionResult Index()
         {
+            if (!IsAdminLoggedIn())
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
+        //GET: AdminController/Admin/
+        public IActionResult Login()
+        { 
+                ViewData["ControllerName"] = "Admin";
+            return View("LoginForm");
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login([Bind("Email, Password")] LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var admin = adminRepository.GetByEmail(model.Email);
+                if (admin != null && admin.Password == model.Password)
+                {
+                    HttpContext.Session.SetString("AdminEmail", admin.Email);
+                    HttpContext.Session.SetInt32("AdminId", admin.Id);
+                    return RedirectToAction("Index", "Admin");
+                }
+                else
+                {
+                    ModelState.AddModelError("Login", "Felaktiga inloggningsuppgifter!");
+
+                    
+                        ViewData["ControllerName"] = "Admin";
+                        return View("Index", model);
+                }
+            }
+            {
+                ViewData["ControllerName"] = "Admin";
+                return View("LoginForm", model);
+            }
+        }
         // GET: AdminController/Details/5
         public ActionResult Details(int id)
         {
@@ -85,6 +124,10 @@ namespace FribergCarRentals.Controllers
             {
                 return View();
             }
+        }
+        private bool IsAdminLoggedIn()
+        {
+            return HttpContext.Session.GetInt32("AdminId") != null;
         }
     }
 }

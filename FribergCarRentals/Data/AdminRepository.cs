@@ -15,9 +15,11 @@ namespace FribergCarRentals.Data
             return applicationDbContext.Admins.OrderBy(a => a.LastName); 
         }
 
-        public Admin GetById(int id)
+        public Admin GetByEmail(string email)
         {
-            return applicationDbContext.Admins.FirstOrDefault(a => a.Id == id);
+            return applicationDbContext.Admins.FirstOrDefault(a => a.Email == email);
         }
+
+        
     }
 }

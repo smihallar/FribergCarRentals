@@ -8,10 +8,8 @@
 <div class="container mt-5">
     <h2 class ="text-center">@ViewData["Title"]</h2>
     <div class="row">
-      
-        @Html.Partial("LoginForm", Model.Login)
-
-        @Html.Partial("RegisterForm", Model.Register)
+        @await Html.PartialAsync("LoginForm", Model.Login)
+        @await Html.PartialAsync("RegisterForm", Model.Register)
     </div>
 </div>
 

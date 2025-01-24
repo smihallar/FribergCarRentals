@@ -20,27 +20,22 @@ namespace FribergCarRentals.Controllers
         // GET: Index 
         public IActionResult Index()
         {
+            ViewData["ControllerName"] = "LoginRegister";
             var model = new LoginRegisterViewModel();
             return View(model);
         }
 
+        
         // POST: Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginRegisterViewModel model)
+        public IActionResult Login([Bind("Email, Password")]LoginViewModel model)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-            //    {
-            //        // Output the error messages to the debug console for troubleshooting
-            //        Debug.WriteLine($"ModelState Error: {error.ErrorMessage}");
-            //    }
-            //}
+
             if (ModelState.IsValid)
             {
-                var customer = customerRepository.GetByEmail(model.Login.Email);
-                if (customer != null && customer.Password == model.Login.Password)
+                var customer = customerRepository.GetByEmail(model.Email);
+                if (customer != null && customer.Password == model.Password)
                 {
                     HttpContext.Session.SetString("CustomerEmail", customer.Email);
                     HttpContext.Session.SetInt32("CustomerId", customer.Id);
@@ -57,15 +52,18 @@ namespace FribergCarRentals.Controllers
             return View("Index", model);
         }
 
+
+      
         // POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(LoginRegisterViewModel model)
+       
+        public IActionResult Register( [Bind("FirstName, LastName, Email, Password")]RegisterViewModel model)
         {
-
+            
             if (ModelState.IsValid)
             {
-                var existingCustomer = customerRepository.GetByEmail(model.Register.Email);
+                var existingCustomer = customerRepository.GetByEmail(model.Email);
                 if (existingCustomer != null)
                 {
                     ViewBag.RegisterError = "Denna email är redan registrerad!";
@@ -74,10 +72,10 @@ namespace FribergCarRentals.Controllers
 
                 var newCustomer = new Customer
                 {
-                    FirstName = model.Register.FirstName,
-                    LastName = model.Register.LastName,
-                    Email = model.Register.Email,
-                    Password = model.Register.Password
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    Password = model.Password
                 };
                 customerRepository.Add(newCustomer);
 
@@ -87,7 +85,10 @@ namespace FribergCarRentals.Controllers
                 return RedirectToAction("Index", "Home"); // ändra till bokningssidan.
             }
             return View("Index", model);
-        }// GET: LoginController
+        }
+
+
+
 
 
         // GET: LoginController/Details/5

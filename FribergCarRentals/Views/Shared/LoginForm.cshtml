@@ -1,31 +1,24 @@
 ﻿@using FribergCarRentals.ViewModels
 @model LoginViewModel
 
+@{
+    var controllerName = ViewData["ControllerName"].ToString() ?? "LoginRegister";
+}
+
 <div class="col-md-6">
     <h4>Login</h4>
-    @if (ViewData.ModelState["Login"] != null)
-
-    {
-
-        foreach (var error in ViewData.ModelState["Login"].Errors)
-
-        {
-            <div class="alert alert-danger">
-                @error.ErrorMessage
-            </div>
-        }
-
-    }
-    <form asp-action="Login" asp-controller="LoginRegister" method="post">
+    
+    <form asp-action="Login" asp-controller="@controllerName" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label for="Login_Email">Email</label>
-            <input type="email" asp-for="Email" id="Login_Email" class="form-control" placeholder="Enter your email" />
+            <input type="email" asp-for="Email" id="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label for="Login_Password">Password</label>
-            <input type="password" asp-for="Password" id="Login_Password" class="form-control" placeholder="Enter your password" />
+            <input type="password" asp-for="Password" id="Password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
 
