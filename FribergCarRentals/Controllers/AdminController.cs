@@ -125,6 +125,15 @@ namespace FribergCarRentals.Controllers
                 return View();
             }
         }
+
+        //public IActionResult ManageCars()
+        //{
+        //    if (!IsAdminLoggedIn())
+        //    {
+        //        return RedirectToAction("Login");
+        //    }
+        //    return View();
+        //}
         private bool IsAdminLoggedIn()
         {
             return HttpContext.Session.GetInt32("AdminId") != null;

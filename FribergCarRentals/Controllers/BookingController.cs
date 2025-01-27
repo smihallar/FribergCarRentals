@@ -1,10 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FribergCarRentals.Data;
+using FribergCarRentals.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FribergCarRentals.Controllers
 {
     public class BookingController : Controller
     {
+        private readonly IBookingRepository bookingRepository;
+
+        public BookingController(IBookingRepository bookingRepository)
+        {
+            this.bookingRepository = bookingRepository;
+        }
         // GET: BookingController
         public ActionResult Index()
         {
@@ -26,16 +34,23 @@ namespace FribergCarRentals.Controllers
         // POST: BookingController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Booking booking)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var customerId = HttpContext.Session.GetInt32("CustomerId");
+                if (customerId.HasValue)
+                {
+                    booking.CustomerId = customerId.Value;
+                    bookingRepository.Add(booking);
+                    return RedirectToAction("Confirmation", "Booking");
+                }
+                else
+                {
+                    RedirectToAction("Index", "LoginRegister");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(booking);
         }
 
         // GET: BookingController/Edit/5

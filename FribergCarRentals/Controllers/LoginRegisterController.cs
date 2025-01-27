@@ -24,7 +24,6 @@ namespace FribergCarRentals.Controllers
             var model = new LoginRegisterViewModel();
             return View(model);
         }
-
         
         // POST: Login
         [HttpPost]
