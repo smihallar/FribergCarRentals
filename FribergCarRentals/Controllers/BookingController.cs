@@ -1,5 +1,6 @@
 ﻿using FribergCarRentals.Data;
 using FribergCarRentals.Models;
+using FribergCarRentals.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,15 +9,41 @@ namespace FribergCarRentals.Controllers
     public class BookingController : Controller
     {
         private readonly IBookingRepository bookingRepository;
+        private readonly ICarRepository carRepository;
 
-        public BookingController(IBookingRepository bookingRepository)
+        public BookingController(IBookingRepository bookingRepository, ICarRepository carRepository)
         {
             this.bookingRepository = bookingRepository;
+            this.carRepository = carRepository;
         }
         // GET: BookingController
         public ActionResult Index()
         {
-            return View();
+            return View(new BookingViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult Index(BookingViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.EndDate <= model.StartDate)
+                {
+                    ModelState.AddModelError("EndDate", "Slutdatum måste vara efter startdatum");
+                }
+                else
+                {
+                    var availableCars = carRepository.GetAll()
+                        .Where(car => !bookingRepository.GetAll()
+                        .Any(booking => booking.CarId == car.Id &&
+                        ((model.StartDate >= booking.StartDate && model.StartDate <= booking.EndDate) ||
+                        (model.EndDate >= booking.StartDate && model.EndDate <= booking.EndDate))))
+                        .ToList();
+
+                    model.AvailableCars = availableCars;
+                }
+            }
+            return View(model);
         }
 
         // GET: BookingController/Details/5
@@ -34,23 +61,36 @@ namespace FribergCarRentals.Controllers
         // POST: BookingController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Booking booking)
+        public ActionResult Create(BookingViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var customerId = HttpContext.Session.GetInt32("CustomerId");
-                if (customerId.HasValue)
+                if (model.EndDate <= model.StartDate)
                 {
-                    booking.CustomerId = customerId.Value;
-                    bookingRepository.Add(booking);
-                    return RedirectToAction("Confirmation", "Booking");
+                    ModelState.AddModelError("EndDate", "Slutdatum måste vara efter startdatum");
                 }
                 else
                 {
-                    RedirectToAction("Index", "LoginRegister");
+                    var customerId = HttpContext.Session.GetInt32("CustomerId");
+                    if (customerId.HasValue)
+                    {
+                        var booking = new Booking
+                        {
+                            CarId = model.SelectedCarId,
+                            StartDate = model.StartDate,
+                            EndDate = model.EndDate,
+                            CustomerId = customerId.Value
+                        };
+                        bookingRepository.Add(booking);
+                        return RedirectToAction("Confirmation", "Booking");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "LoginRegister");
+                    }
                 }
             }
-            return View(booking);
+            return View("Index", model);
         }
 
         // GET: BookingController/Edit/5

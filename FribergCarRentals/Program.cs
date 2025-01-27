@@ -15,6 +15,9 @@ namespace FribergCarRentals
 
             builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
             builder.Services.AddTransient<IAdminRepository, AdminRepository>();
+            builder.Services.AddTransient<IBookingRepository, BookingRepository>();
+            builder.Services.AddTransient<ICarRepository, CarRepository>();
+
 
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>

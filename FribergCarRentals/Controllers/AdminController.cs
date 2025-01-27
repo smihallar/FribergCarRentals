@@ -1,5 +1,6 @@
 ﻿using AspNetCoreGeneratedDocument;
 using FribergCarRentals.Data;
+using FribergCarRentals.Models;
 using FribergCarRentals.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,12 @@ namespace FribergCarRentals.Controllers
     public class AdminController : Controller
     {
         private readonly IAdminRepository adminRepository;
+        private readonly ICarRepository carRepository;
 
-        public AdminController(IAdminRepository adminRepository)
+        public AdminController(IAdminRepository adminRepository, ICarRepository carRepository)
         {
             this.adminRepository = adminRepository;
+            this.carRepository = carRepository;
         }
         // GET: AdminController
         public ActionResult Index()
@@ -39,9 +42,10 @@ namespace FribergCarRentals.Controllers
                 var admin = adminRepository.GetByEmail(model.Email);
                 if (admin != null && admin.Password == model.Password)
                 {
+                   
                     HttpContext.Session.SetString("AdminEmail", admin.Email);
                     HttpContext.Session.SetInt32("AdminId", admin.Id);
-                    return RedirectToAction("Index", "Admin");
+                    return View("Index", "Admin");
                 }
                 else
                 {
@@ -52,10 +56,41 @@ namespace FribergCarRentals.Controllers
                         return View("Index", model);
                 }
             }
+            else
             {
                 ViewData["ControllerName"] = "Admin";
                 return View("LoginForm", model);
             }
+        }
+        // GET: AdminController/AddCar
+        public IActionResult AddCar()
+        {
+            if (!IsAdminLoggedIn())
+            {
+                return RedirectToAction("Login");
+            }
+            return View(new CarViewModel());
+        }
+
+        // POST: AdminController/AddCar
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddCar(CarViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var car = new Car
+                {
+                    Name = model.Name,
+                    PricePerDay = model.PricePerDay,
+                    ImageLinks = model.ImageLinks,
+                    IsAvailable = model.IsAvailable
+                };
+
+                carRepository.Add(car);
+                return RedirectToAction("Index", "Admin");
+            }
+            return View(model);
         }
         // GET: AdminController/Details/5
         public ActionResult Details(int id)
