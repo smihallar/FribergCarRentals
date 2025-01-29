@@ -10,8 +10,7 @@ namespace FribergCarRentals.ViewModels
         [Required]
         public decimal PricePerDay { get; set; }
 
-        [Required]
-        public List<string> ImageLinks { get; set; }
+        public List<string> ImageLinks { get; set; } = new List<string>();
 
         public bool IsAvailable { get; set; }
     }
