@@ -8,6 +8,6 @@ namespace FribergCarRentals.Data
         IEnumerable<Booking> GetAll();
         void Add(Booking booking);
         void Update(Booking booking);
-        void Delete(int id);
+        void Delete(Booking booking);
     }
 }

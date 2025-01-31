@@ -1,4 +1,5 @@
 ﻿using FribergCarRentals.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace FribergCarRentals.Data
 {
@@ -17,14 +18,10 @@ namespace FribergCarRentals.Data
             applicationDbContext.SaveChanges();
         }
 
-        public void Delete(int id)
-        {
-            var booking = applicationDbContext.Bookings.Find(id);
-            if (booking != null)
-            {
+        public void Delete(Booking booking)
+        {  
                 applicationDbContext.Bookings.Remove(booking);
                 applicationDbContext.SaveChanges();
-            }
         }
 
         public IEnumerable<Booking> GetAll()

@@ -17,7 +17,7 @@ namespace FribergCarRentals.Controllers
             this.carRepository = carRepository;
         }
         // GET: BookingController
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View(new BookingViewModel());
         }
@@ -47,13 +47,13 @@ namespace FribergCarRentals.Controllers
         }
 
         // GET: BookingController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             return View();
         }
 
         // GET: BookingController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -61,7 +61,7 @@ namespace FribergCarRentals.Controllers
         // POST: BookingController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(BookingViewModel model)
+        public IActionResult Create(BookingViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace FribergCarRentals.Controllers
         }
 
         // GET: BookingController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             return View();
         }
@@ -125,7 +125,7 @@ namespace FribergCarRentals.Controllers
         // POST: BookingController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -138,7 +138,7 @@ namespace FribergCarRentals.Controllers
         }
 
         // GET: BookingController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             return View();
         }
@@ -146,19 +146,19 @@ namespace FribergCarRentals.Controllers
         // POST: BookingController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Delete(Booking booking)
         {
-            try
+
+            if (booking != null && booking.StartDate > DateTime.Now)
             {
-                return RedirectToAction(nameof(Index));
+                bookingRepository.Delete(booking);
+                return RedirectToAction("List");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View();
         }
-        
-        public IActionResult List ()
+
+        public IActionResult List()
         {
             var customerId = HttpContext.Session.GetInt32("CustomerId");
             if (!customerId.HasValue)

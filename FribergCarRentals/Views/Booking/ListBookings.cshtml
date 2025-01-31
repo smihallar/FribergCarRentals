@@ -1,0 +1,35 @@
+﻿@* @model IEnumerable<FribergCarRentals.Models.Booking>
+
+<h1>My Bookings</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Startdatum</th>
+            <th>Slutdatum</th>
+            <th>Total kostnad</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                
+                <td>@booking.StartDate.ToShortDateString()</td>
+                <td>@booking.EndDate.ToShortDateString()</td>
+                <td>@booking.TotalCost.ToString("C")</td>
+                <td>
+                    @if (booking.StartDate > DateTime.Now)
+                    {
+                        <form asp-action="Delete" method="post">
+                            <input type="hidden" name="id" value="@booking.Id" />
+                            <button type="submit" class="btn btn-danger">Cancel Booking</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ *@

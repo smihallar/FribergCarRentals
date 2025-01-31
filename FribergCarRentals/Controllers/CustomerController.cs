@@ -6,19 +6,19 @@ namespace FribergCarRentals.Controllers
     public class CustomerController : Controller
     {
         // GET: CustomerController
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         // GET: CustomerController/Details/5
-        public ActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             return View();
         }
 
         // GET: CustomerController/Create
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -26,7 +26,7 @@ namespace FribergCarRentals.Controllers
         // POST: CustomerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(IFormCollection collection)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace FribergCarRentals.Controllers
         }
 
         // GET: CustomerController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             return View();
         }
@@ -47,7 +47,7 @@ namespace FribergCarRentals.Controllers
         // POST: CustomerController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace FribergCarRentals.Controllers
         }
 
         // GET: CustomerController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
             return View();
         }
@@ -68,7 +68,7 @@ namespace FribergCarRentals.Controllers
         // POST: CustomerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult Delete(int id, IFormCollection collection)
         {
             try
             {

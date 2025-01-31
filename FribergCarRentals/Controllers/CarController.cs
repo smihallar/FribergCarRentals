@@ -1,4 +1,6 @@
 ﻿using FribergCarRentals.Data;
+using FribergCarRentals.Models;
+using FribergCarRentals.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,7 +33,7 @@ namespace FribergCarRentals.Controllers
             return View(car);
         }
 
-        public ActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -39,16 +41,24 @@ namespace FribergCarRentals.Controllers
         // POST: AdminController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(CarViewModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var car = new Car
+                {
+                    Name = model.Name,
+                    PricePerDay = model.PricePerDay,
+                    ImageLinks = model.ImageLinks,
+                    IsAvailable = model.IsAvailable
+                };
+
+                carRepository.Add(car);
+                return RedirectToAction("Index", "Admin");
             }
-            catch
-            {
-                return View();
-            }
+            return View(model);
         }
+
+        public IActionResult
     }
 }
