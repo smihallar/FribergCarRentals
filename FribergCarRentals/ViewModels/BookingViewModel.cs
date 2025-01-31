@@ -16,6 +16,8 @@ namespace FribergCarRentals.ViewModels
         public int SelectedCarId { get; set; }
 
         public List<Car> AvailableCars { get; set; } = new List<Car>();
+        public decimal TotalCost { get; set; }
+
 
     }
 }

@@ -1,5 +1,6 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model FribergCarRentals.Models.Booking
+<h1>Tack för din bokning!</h1>
+<p>Bil: @ViewBag.CarName</p>
+<p>Startdatum: @Model.StartDate.ToShortDateString()</p>
+<p>Slutdatum: @Model.EndDate.ToShortDateString()</p>
+<p>Total kostnad: @Model.TotalCost.ToString("C")</p>

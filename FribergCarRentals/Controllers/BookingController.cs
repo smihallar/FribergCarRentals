@@ -74,15 +74,23 @@ namespace FribergCarRentals.Controllers
                     var customerId = HttpContext.Session.GetInt32("CustomerId");
                     if (customerId.HasValue)
                     {
+                        var car = carRepository.GetById(model.SelectedCarId);
+                        if (car == null)
+                        {
+                            return NotFound();
+                        }
+                        var days = (model.EndDate - model.StartDate).Days;
+                        model.TotalCost = car.PricePerDay * days;
                         var booking = new Booking
                         {
                             CarId = model.SelectedCarId,
                             StartDate = model.StartDate,
                             EndDate = model.EndDate,
-                            CustomerId = customerId.Value
+                            CustomerId = customerId.Value,
+                            TotalCost = model.TotalCost
                         };
                         bookingRepository.Add(booking);
-                        return RedirectToAction("Confirmation", "Booking");
+                        return RedirectToAction("Confirmation", "Booking", new { id = booking.Id });
                     }
                     else
                     {
@@ -91,6 +99,21 @@ namespace FribergCarRentals.Controllers
                 }
             }
             return View("Index", model);
+        }
+        public IActionResult Confirmation(int id)
+        {
+            var booking = bookingRepository.GetById(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+            var car = carRepository.GetById(booking.CarId);
+            if (car == null)
+            {
+                return NotFound();
+            }
+            ViewBag.CarName = car.Name;
+            return View(booking);
         }
 
         // GET: BookingController/Edit/5
@@ -133,6 +156,17 @@ namespace FribergCarRentals.Controllers
             {
                 return View();
             }
+        }
+        
+        public IActionResult List ()
+        {
+            var customerId = HttpContext.Session.GetInt32("CustomerId");
+            if (!customerId.HasValue)
+            {
+                return RedirectToAction("Index", "LoginRegister");
+            }
+            var bookings = bookingRepository.GetAll().Where(b => b.CustomerId == customerId.Value).ToList();
+            return View(bookings);
         }
     }
 }

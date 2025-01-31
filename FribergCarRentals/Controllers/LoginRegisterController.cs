@@ -39,7 +39,7 @@ namespace FribergCarRentals.Controllers
                     HttpContext.Session.SetString("CustomerEmail", customer.Email);
                     HttpContext.Session.SetInt32("CustomerId", customer.Id);
 
-                    return RedirectToAction("Index", "Booking");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace FribergCarRentals.Controllers
                 HttpContext.Session.SetString("CustomerEmail", newCustomer.Email);
                 HttpContext.Session.SetInt32("CustomerId", newCustomer.Id);
 
-                return RedirectToAction("Index", "Home"); // ändra till bokningssidan.
+                return RedirectToAction("Index", "Home");
             }
             return View("Index", model);
         }

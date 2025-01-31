@@ -1,5 +1,4 @@
-﻿using AspNetCoreGeneratedDocument;
-using FribergCarRentals.Data;
+﻿using FribergCarRentals.Data;
 using FribergCarRentals.Models;
 using FribergCarRentals.ViewModels;
 using Microsoft.AspNetCore.Http;

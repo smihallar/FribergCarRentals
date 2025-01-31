@@ -22,14 +22,45 @@
     <form asp-action="Create" method="post">
         <input type="hidden" asp-for="StartDate" />
         <input type="hidden" asp-for="EndDate" />
-        <div class="form-group">
-            <label for="SelectedCarId">Select Car</label>
-            <select asp-for="SelectedCarId" class="form-control">
-                @foreach (var car in Model.AvailableCars)
-                {
-                    <option value="@car.Id">@car.Name</option>
-                }
-            </select>
+        <div class="row">
+            @foreach (var car in Model.AvailableCars)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        @if (car.ImageLinks.Any())
+                        {
+                            <div id="carousel-@car.Id" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    @for (int i = 0; i < car.ImageLinks.Count; i++)
+                                    {
+                                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                                            <img src="@car.ImageLinks[i]" class="d-block w-100" alt="@car.Name" />
+                                        </div>
+                                    }
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-@car.Id" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-@car.Id" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@car.Name</h5>
+                            <p class="card-text">Price per day: @car.PricePerDay.ToString("C")</p>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="SelectedCarId" value="@car.Id" id="car-@car.Id" />
+                                <label class="form-check-label" for="car-@car.Id">
+                                    Select this car
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
         <button type="submit" class="btn btn-primary">Book Car</button>
     </form>

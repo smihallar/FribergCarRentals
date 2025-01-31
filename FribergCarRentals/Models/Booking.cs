@@ -8,5 +8,6 @@
         public DateTime EndDate { get; set; }
         public bool IsCompleted { get; set; }
         public int CustomerId { get; set; }
+        public decimal TotalCost { get; set; }
     }
 }
