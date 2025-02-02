@@ -59,6 +59,6 @@ namespace FribergCarRentals.Controllers
             return View(model);
         }
 
-        public IActionResult
+        //public IActionResult
     }
 }

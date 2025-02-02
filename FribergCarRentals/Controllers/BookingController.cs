@@ -3,6 +3,7 @@ using FribergCarRentals.Models;
 using FribergCarRentals.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace FribergCarRentals.Controllers
 {
@@ -16,6 +17,7 @@ namespace FribergCarRentals.Controllers
             this.bookingRepository = bookingRepository;
             this.carRepository = carRepository;
         }
+
         // GET: BookingController
         public IActionResult Index()
         {
@@ -27,7 +29,10 @@ namespace FribergCarRentals.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.EndDate <= model.StartDate)
+                var startDateTime = model.StartDate.Date + model.StartTime;
+                var endDateTime = model.EndDate.Date + model.EndTime;
+
+                if (endDateTime <= startDateTime)
                 {
                     ModelState.AddModelError("EndDate", "Slutdatum måste vara efter startdatum");
                 }
@@ -36,8 +41,8 @@ namespace FribergCarRentals.Controllers
                     var availableCars = carRepository.GetAll()
                         .Where(car => !bookingRepository.GetAll()
                         .Any(booking => booking.CarId == car.Id &&
-                        ((model.StartDate >= booking.StartDate && model.StartDate <= booking.EndDate) ||
-                        (model.EndDate >= booking.StartDate && model.EndDate <= booking.EndDate))))
+                        ((startDateTime >= booking.StartDate && startDateTime <= booking.EndDate) ||
+                        (endDateTime >= booking.StartDate && endDateTime <= booking.EndDate))))
                         .ToList();
 
                     model.AvailableCars = availableCars;
@@ -65,7 +70,10 @@ namespace FribergCarRentals.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.EndDate <= model.StartDate)
+                var startDateTime = model.StartDate.Date + model.StartTime;
+                var endDateTime = model.EndDate.Date + model.EndTime;
+
+                if (endDateTime <= startDateTime)
                 {
                     ModelState.AddModelError("EndDate", "Slutdatum måste vara efter startdatum");
                 }
@@ -79,13 +87,13 @@ namespace FribergCarRentals.Controllers
                         {
                             return NotFound();
                         }
-                        var days = (model.EndDate - model.StartDate).Days;
+                        var days = (endDateTime - startDateTime).Days;
                         model.TotalCost = car.PricePerDay * days;
                         var booking = new Booking
                         {
                             CarId = model.SelectedCarId,
-                            StartDate = model.StartDate,
-                            EndDate = model.EndDate,
+                            StartDate = startDateTime,
+                            EndDate = endDateTime,
                             CustomerId = customerId.Value,
                             TotalCost = model.TotalCost
                         };
@@ -100,6 +108,7 @@ namespace FribergCarRentals.Controllers
             }
             return View("Index", model);
         }
+
         public IActionResult Confirmation(int id)
         {
             var booking = bookingRepository.GetById(id);
@@ -140,7 +149,12 @@ namespace FribergCarRentals.Controllers
         // GET: BookingController/Delete/5
         public IActionResult Delete(int id)
         {
-            return View();
+            var booking = bookingRepository.GetById(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+            return View(booking);
         }
 
         // POST: BookingController/Delete/5
@@ -148,25 +162,35 @@ namespace FribergCarRentals.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Booking booking)
         {
-
-            if (booking != null && booking.StartDate > DateTime.Now)
+            if (booking != null && booking.StartDate > DateTime.Now && booking.EndDate > DateTime.Now)
             {
                 bookingRepository.Delete(booking);
-                return RedirectToAction("List");
+                return RedirectToAction("List", "Booking");
             }
-
-            return View();
+            ViewBag.ErrorMessage = "Bokningen kan inte tas bort";
+            return View(booking);
         }
 
         public IActionResult List()
         {
             var customerId = HttpContext.Session.GetInt32("CustomerId");
-            if (!customerId.HasValue)
+            var adminId = HttpContext.Session.GetInt32("AdminId");
+
+            if (adminId.HasValue)
             {
+                var bookings = bookingRepository.GetAll().ToList();
+                return View(bookings);
+            }
+            else if (customerId.HasValue)
+            {
+                var bookings = bookingRepository.GetAll().Where(b => b.CustomerId == customerId.Value).ToList();
+                return View(bookings);
+            }
+            else
+            {
+                // No user is signed in, redirect to login
                 return RedirectToAction("Index", "LoginRegister");
             }
-            var bookings = bookingRepository.GetAll().Where(b => b.CustomerId == customerId.Value).ToList();
-            return View(bookings);
         }
     }
 }
