@@ -11,11 +11,13 @@ namespace FribergCarRentals.Controllers
     {
         private readonly IBookingRepository bookingRepository;
         private readonly ICarRepository carRepository;
+        private readonly ICustomerRepository customerRepository;
 
-        public BookingController(IBookingRepository bookingRepository, ICarRepository carRepository)
+        public BookingController(IBookingRepository bookingRepository, ICarRepository carRepository, ICustomerRepository customerRepository)
         {
             this.bookingRepository = bookingRepository;
             this.carRepository = carRepository;
+            this.customerRepository = customerRepository;
         }
 
         // GET: BookingController
@@ -54,7 +56,12 @@ namespace FribergCarRentals.Controllers
         // GET: BookingController/Details/5
         public IActionResult Details(int id)
         {
-            return View();
+            var booking = bookingRepository.GetById(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+            return View(booking);
         }
 
         // GET: BookingController/Create
@@ -98,6 +105,7 @@ namespace FribergCarRentals.Controllers
                             TotalCost = model.TotalCost
                         };
                         bookingRepository.Add(booking);
+                        customerRepository.AddBooking((int)customerId, booking);
                         return RedirectToAction("Confirmation", "Booking", new { id = booking.Id });
                     }
                     else

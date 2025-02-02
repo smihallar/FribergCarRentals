@@ -40,7 +40,7 @@ namespace FribergCarRentals.Controllers
             return View();
         }
 
-        // POST: AdminController/Create
+        // POST: 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(CarViewModel model)
@@ -56,7 +56,7 @@ namespace FribergCarRentals.Controllers
                 };
 
                 carRepository.Add(car);
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("List", "Car");
             }
             return View(model);
         }
@@ -81,7 +81,7 @@ namespace FribergCarRentals.Controllers
                 carRepository.Delete(car.Id);
                 return RedirectToAction("List", "Car");
             }
-            ViewBag.ErrorMessage = "Bilen kan inte tas bort";
+            ViewBag.DeleteCarMessage = "Bilen kan inte tas bort";
             return View(car);
         }
 
@@ -91,6 +91,30 @@ namespace FribergCarRentals.Controllers
             return View(cars);
         }
 
+        public IActionResult Edit(int id)
+        {
+            return View(carRepository.GetById(id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(Car car)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    carRepository.Update(car);
+                }
+                return RedirectToAction("List", "Car");
+            }
+            catch
+            {
+                ViewBag.EditCarError = "Bilen kunde inte ändras.";
+                return View();
+            }
+        }
 
     }
 }
+
