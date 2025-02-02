@@ -9,10 +9,12 @@ namespace FribergCarRentals.Controllers
     public class CarController : Controller
     {
         private readonly ICarRepository carRepository;
+        private readonly IBookingRepository bookingRepository;
 
-        public CarController(ICarRepository carRepository)
+        public CarController(ICarRepository carRepository, IBookingRepository bookingRepository)
         {
             this.carRepository = carRepository;
+            this.bookingRepository = bookingRepository;
         }
 
         // List all available cars
@@ -59,6 +61,36 @@ namespace FribergCarRentals.Controllers
             return View(model);
         }
 
-        //public IActionResult
+        //GET/Car/Delete/5
+        public IActionResult Delete(int id)
+        {
+            var car = carRepository.GetById(id);
+            if (car == null || HttpContext.Session.GetInt32("AdminId") == null)
+            {
+                return NotFound();
+            }
+            return View(car);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(Car car)
+        {
+            if (bookingRepository.GetAll().Where(b => b.CarId == car.Id) == null)
+            {
+                carRepository.Delete(car.Id);
+                return RedirectToAction("List", "Car");
+            }
+            ViewBag.ErrorMessage = "Bilen kan inte tas bort";
+            return View(car);
+        }
+
+        public IActionResult List()
+        {
+            var cars = carRepository.GetAll();
+            return View(cars);
+        }
+
+
     }
 }

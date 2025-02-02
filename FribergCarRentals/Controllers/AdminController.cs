@@ -62,35 +62,35 @@ namespace FribergCarRentals.Controllers
             }
         }
         // GET: AdminController/AddCar
-        public IActionResult AddCar()
-        {
-            if (!IsAdminLoggedIn())
-            {
-                return RedirectToAction("Login");
-            }
-            return View(new CarViewModel());
-        }
+        //public IActionResult AddCar()
+        //{
+        //    if (!IsAdminLoggedIn())
+        //    {
+        //        return RedirectToAction("Login");
+        //    }
+        //    return View(new CarViewModel());
+        //}
 
         // POST: AdminController/AddCar
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AddCar(CarViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var car = new Car
-                {
-                    Name = model.Name,
-                    PricePerDay = model.PricePerDay,
-                    ImageLinks = model.ImageLinks,
-                    IsAvailable = model.IsAvailable
-                };
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult AddCar(CarViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var car = new Car
+        //        {
+        //            Name = model.Name,
+        //            PricePerDay = model.PricePerDay,
+        //            ImageLinks = model.ImageLinks,
+        //            IsAvailable = model.IsAvailable
+        //        };
 
-                carRepository.Add(car);
-                return RedirectToAction("Index", "Admin");
-            }
-            return View(model);
-        }
+        //        carRepository.Add(car);
+        //        return RedirectToAction("Index", "Admin");
+        //    }
+        //    return View(model);
+        //}
         // GET: AdminController/Details/5
         public IActionResult Details(int id)
         {
