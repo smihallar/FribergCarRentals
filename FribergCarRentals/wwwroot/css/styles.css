@@ -1,0 +1,23 @@
+﻿:root {
+    --primary: #ED7631;
+    --secondary: #FBC337;
+    --light-grey: #9CA8AE;
+    --dark-grey: #5A5A5A;
+    --danger: #E45521;
+}
+body {
+    color: var(--dark-grey);
+    background-color: white;
+}
+.logo {
+    max-height: 70px;
+    max-width: 150px;
+    height: auto;
+    width: auto;
+    margin: 0;
+}
+
+.navbar {
+    background-color: var(--dark-grey);
+    color: white;
+}
