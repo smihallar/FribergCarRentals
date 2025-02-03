@@ -20,6 +20,11 @@ namespace FribergCarRentals.Controllers
         // GET: Index 
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetInt32("CustomerId") != null)
+            {
+                ViewBag.LoginMessage = "Du är redan inloggad!";
+                return RedirectToAction("Index", "Home");
+            }
             ViewData["ControllerName"] = "LoginRegister";
             var model = new LoginRegisterViewModel();
             return View(model);
@@ -86,77 +91,5 @@ namespace FribergCarRentals.Controllers
             return View("Index", model);
         }
 
-
-
-
-
-        // GET: LoginController/Details/5
-        public IActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: LoginController/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: LoginController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LoginController/Edit/5
-        public IActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: LoginController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: LoginController/Delete/5
-        public IActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: LoginController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

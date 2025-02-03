@@ -76,7 +76,7 @@ namespace FribergCarRentals.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Car car)
         {
-            if (bookingRepository.GetAll().Where(b => b.CarId == car.Id) == null)
+            if (!bookingRepository.GetAll().Any(b => b.CarId == car.Id))
             {
                 carRepository.Delete(car.Id);
                 return RedirectToAction("List", "Car");

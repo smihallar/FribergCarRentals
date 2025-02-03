@@ -61,7 +61,33 @@ namespace FribergCarRentals.Controllers
             {
                 return NotFound();
             }
-            return View(booking);
+
+            // Update IsCompleted status
+            if (booking.EndDate <= DateTime.Now && !booking.IsCompleted)
+            {
+                booking.IsCompleted = true;
+                bookingRepository.Update(booking);
+            }
+
+            var customer = customerRepository.GetById(booking.CustomerId);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            var car = carRepository.GetById(booking.CarId);
+            if (car == null)
+            {
+                return NotFound();
+            }
+            var viewModel = new CustomerBookingViewModel
+            {
+                Customer = customer,
+                Booking = booking,
+                Car = car
+            };
+
+            return View(viewModel);
         }
 
         // GET: BookingController/Create
@@ -170,7 +196,7 @@ namespace FribergCarRentals.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Booking booking)
         {
-            if (booking != null && booking.StartDate > DateTime.Now && booking.EndDate > DateTime.Now)
+            if (booking != null && booking.IsCompleted == false && booking.StartDate > DateTime.Now)
             {
                 bookingRepository.Delete(booking);
                 return RedirectToAction("List", "Booking");
@@ -184,15 +210,26 @@ namespace FribergCarRentals.Controllers
             var customerId = HttpContext.Session.GetInt32("CustomerId");
             var adminId = HttpContext.Session.GetInt32("AdminId");
 
+            var bookings = bookingRepository.GetAll().ToList();
+
+            // Update IsCompleted status
+            foreach (var booking in bookings)
+            {
+                if (booking.EndDate <= DateTime.Now && !booking.IsCompleted)
+                {
+                    booking.IsCompleted = true;
+                    bookingRepository.Update(booking);
+                }
+            }
+
             if (adminId.HasValue)
             {
-                var bookings = bookingRepository.GetAll().ToList();
                 return View(bookings);
             }
             else if (customerId.HasValue)
             {
-                var bookings = bookingRepository.GetAll().Where(b => b.CustomerId == customerId.Value).ToList();
-                return View(bookings);
+                var customerBookings = bookings.Where(b => b.CustomerId == customerId.Value).ToList();
+                return View(customerBookings);
             }
             else
             {

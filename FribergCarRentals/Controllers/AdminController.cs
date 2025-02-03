@@ -27,21 +27,26 @@ namespace FribergCarRentals.Controllers
         }
         //GET: AdminController/Admin/
         public IActionResult Login()
-        { 
-                ViewData["ControllerName"] = "Admin";
+        {
+            if (IsAdminLoggedIn())
+            {
+                return RedirectToAction("Index");
+            }
+
+            ViewData["ControllerName"] = "Admin";
             return View("LoginForm");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login([Bind("Email, Password")] LoginViewModel model)
+        public IActionResult Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var admin = adminRepository.GetByEmail(model.Email);
                 if (admin != null && admin.Password == model.Password)
                 {
-                   
+
                     HttpContext.Session.SetString("AdminEmail", admin.Email);
                     HttpContext.Session.SetInt32("AdminId", admin.Id);
                     return View("Index", "Admin");
@@ -50,9 +55,9 @@ namespace FribergCarRentals.Controllers
                 {
                     ModelState.AddModelError("Login", "Felaktiga inloggningsuppgifter!");
 
-                    
-                        ViewData["ControllerName"] = "Admin";
-                        return View("Index", model);
+
+                    ViewData["ControllerName"] = "Admin";
+                    return View("Index", model);
                 }
             }
             else
