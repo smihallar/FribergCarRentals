@@ -1,13 +1,21 @@
 ﻿:root {
-    --primary: #ED7631;
+    --primary: #ef874b;
     --secondary: #FBC337;
+    --tertiary: #FDD163;
     --light-grey: #9CA8AE;
     --dark-grey: #5A5A5A;
     --danger: #E45521;
+    --light-danger: #e27851;
 }
+
 body {
     color: var(--dark-grey);
     background-color: white;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+h1 {
+ 
 }
 .logo {
     max-height: 70px;
@@ -18,6 +26,40 @@ body {
 }
 
 .navbar {
-    background-color: var(--dark-grey);
-    color: white;
+    background-color: black !important;
+    color: white !important;
 }
+
+.navbar .nav-link {
+        color: white !important;
+}
+
+.btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+    .btn-primary:hover {
+        background-color: var(--secondary) !important;
+        border-color: var(--secondary) !important;
+    }
+
+.btn-secondary {
+    background-color: var(--dark-grey) !important;
+    border-color: var(--dark-grey) !important;
+}
+
+.btn.btn-secondary:hover {
+    background-color: var(--light-grey) !important;
+    border-color: var(--light-grey) !important;
+}
+
+.btn-danger {
+    background-color: var(--danger) !important;
+    border-color: var(--danger) !important;
+}
+
+    .btn-danger:hover {
+        background-color: var(--light-danger) !important;
+        border-color: var(--light-danger) !important;
+    }

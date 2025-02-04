@@ -1,7 +1,35 @@
-﻿<h1>Vad vill du göra som administratör?</h1>
-    <ul>
-    <li><a href="@Url.Action("List", "Booking")">Se bokningar</a></li>
-        <li><a href="@Url.Action("List", "Car")">Se bilar</a></li>
-    <li><a href="@Url.Action("Index", "Customer")">Kunder</a></li>
-    </ul>
-  
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h1>Vad vill du göra som administratör?</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-calendar-alt fa-3x mb-3"></i>
+                <h5 class="card-title">Se bokningar</h5>
+                <a href="@Url.Action("List", "Booking")" class="btn btn-secondary">Bokningar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-car fa-3x mb-3"></i>
+                <h5 class="card-title">Se bilar</h5>
+                <a href="@Url.Action("List", "Car")" class="btn btn-secondary">Bilar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <i class="fas fa-users fa-3x mb-3"></i>
+                <h5 class="card-title">Se kunder</h5>
+                <a href="@Url.Action("Index", "Customer")" class="btn btn-secondary">Kunder</a>
+            </div>
+        </div>
+    </div>
+</div>

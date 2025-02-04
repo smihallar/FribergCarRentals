@@ -91,5 +91,12 @@ namespace FribergCarRentals.Controllers
             return View("Index", model);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace FribergCarRentals.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            return View(new CarViewModel());
         }
 
         // POST: 
