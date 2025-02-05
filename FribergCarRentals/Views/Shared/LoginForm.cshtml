@@ -5,9 +5,17 @@
     var controllerName = ViewData["ControllerName"].ToString() ?? "LoginRegister";
 }
 
+
+
+
 <div class="col-md-6">
-    <h4>Login</h4>
-    
+    <h4>Logga in</h4>
+    @if (ViewBag.LoginErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.LoginErrorMessage
+        </div>
+    }
     <form asp-action="Login" asp-controller="@controllerName" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">

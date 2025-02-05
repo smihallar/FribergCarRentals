@@ -53,7 +53,7 @@ namespace FribergCarRentals.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("Login", "Felaktiga inloggningsuppgifter!");
+                    ViewBag.LoginErrorMessage = "Fel inloggningsuppgifter";
 
 
                     ViewData["ControllerName"] = "Admin";
@@ -66,113 +66,6 @@ namespace FribergCarRentals.Controllers
                 return View("LoginForm", model);
             }
         }
-        // GET: AdminController/AddCar
-        //public IActionResult AddCar()
-        //{
-        //    if (!IsAdminLoggedIn())
-        //    {
-        //        return RedirectToAction("Login");
-        //    }
-        //    return View(new CarViewModel());
-        //}
-
-        // POST: AdminController/AddCar
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public IActionResult AddCar(CarViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var car = new Car
-        //        {
-        //            Name = model.Name,
-        //            PricePerDay = model.PricePerDay,
-        //            ImageLinks = model.ImageLinks,
-        //            IsAvailable = model.IsAvailable
-        //        };
-
-        //        carRepository.Add(car);
-        //        return RedirectToAction("Index", "Admin");
-        //    }
-        //    return View(model);
-        //}
-        // GET: AdminController/Details/5
-        public IActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: AdminController/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AdminController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AdminController/Edit/5
-        public IActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AdminController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AdminController/Delete/5
-        public IActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AdminController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //public IActionResult ManageCars()
-        //{
-        //    if (!IsAdminLoggedIn())
-        //    {
-        //        return RedirectToAction("Login");
-        //    }
-        //    return View();
-        //}
         private bool IsAdminLoggedIn()
         {
             return HttpContext.Session.GetInt32("AdminId") != null;

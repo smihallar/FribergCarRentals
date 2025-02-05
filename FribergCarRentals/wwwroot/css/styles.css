@@ -3,6 +3,7 @@
     --secondary: #FBC337;
     --tertiary: #FDD163;
     --light-grey: #9CA8AE;
+    --medium-grey: #6a6e70;
     --dark-grey: #5A5A5A;
     --danger: #E45521;
     --light-danger: #e27851;
@@ -26,7 +27,7 @@ h1 {
 }
 
 .navbar {
-    background-color: black !important;
+    background-color: var(--medium-grey) !important;
     color: white !important;
 }
 

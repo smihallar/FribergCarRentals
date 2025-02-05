@@ -6,7 +6,7 @@
 
 <h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to delete this car?</h3>
 @if (ViewBag.DeleteCarMessage != null)
 {
     <div class="alert alert-danger">
@@ -14,38 +14,38 @@
     </div>
 }
 <div>
-    <h4>Car</h4>
+    <h4>Car Details</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageLinks)
+        <dt class="col-sm-2">
+            Bildlänkar
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ImageLinks)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            Modell
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PricePerDay)
+        <dt class="col-sm-2">
+            Pris per dag
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PricePerDay)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsAvailable)
+        <dt class="col-sm-2">
+            Tillgänglig
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IsAvailable)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <button type="submit" class="btn btn-danger">Radera</button>
+        <a asp-action="List" class="btn btn-secondary">Back to List</a>
     </form>
 </div>

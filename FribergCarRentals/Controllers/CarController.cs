@@ -37,7 +37,11 @@ namespace FribergCarRentals.Controllers
 
         public IActionResult Create()
         {
-            return View(new CarViewModel());
+            var model = new CarViewModel
+            {
+                ImageLinks = new List<string> { string.Empty } // Initialize with one empty string
+            };
+            return View(model);
         }
 
         // POST: 
