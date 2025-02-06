@@ -136,6 +136,7 @@ namespace FribergCarRentals.Controllers
                     }
                     else
                     {
+                        HttpContext.Session.SetString("RedirectToBooking", "true");
                         return RedirectToAction("Index", "LoginRegister");
                     }
                 }
@@ -155,29 +156,15 @@ namespace FribergCarRentals.Controllers
             {
                 return NotFound();
             }
-            ViewBag.CarName = car.Name;
-            return View(booking);
-        }
+            var customer = customerRepository.GetById(booking.CustomerId);
 
-        // GET: BookingController/Edit/5
-        public IActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: BookingController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            CustomerBookingViewModel model = new CustomerBookingViewModel
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                Booking = booking,
+                Car = car,
+                Customer = customer
+            };
+            return View(model);
         }
 
         // GET: BookingController/Delete/5
@@ -196,13 +183,14 @@ namespace FribergCarRentals.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Booking booking)
         {
-            if (booking != null && booking.IsCompleted == false && booking.StartDate > DateTime.Now)
+            var existingBooking = bookingRepository.GetById(booking.Id);
+            if (existingBooking != null && existingBooking.IsCompleted == false && existingBooking.StartDate > DateTime.Now)
             {
-                bookingRepository.Delete(booking);
+                bookingRepository.Delete(existingBooking);
                 return RedirectToAction("List", "Booking");
             }
             ViewBag.ErrorMessage = "Bokningen kan inte tas bort";
-            return View(booking);
+            return View(existingBooking);
         }
 
         public IActionResult List()
@@ -233,7 +221,6 @@ namespace FribergCarRentals.Controllers
             }
             else
             {
-                // No user is signed in, redirect to login
                 return RedirectToAction("Index", "LoginRegister");
             }
         }

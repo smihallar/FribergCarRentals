@@ -1,12 +1,9 @@
 ﻿@using FribergCarRentals.ViewModels
 @model LoginRegisterViewModel
 
-
 <div class="container mt-5">
     <div class="row">
-        @await Html.PartialAsync("LoginForm", Model.Login)
-        @await Html.PartialAsync("RegisterForm", Model.Register)
+        @Html.Partial("LoginForm", Model.Login)
+        @Html.Partial("RegisterForm", Model.Register)
     </div>
 </div>
-
-

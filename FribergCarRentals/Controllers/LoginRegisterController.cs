@@ -23,8 +23,7 @@ namespace FribergCarRentals.Controllers
             ViewData["ControllerName"] = "LoginRegister";
             return View(new LoginRegisterViewModel());
         }
-        
-        // POST: Login
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Login([Bind("Email, Password")] LoginViewModel model)
@@ -36,6 +35,14 @@ namespace FribergCarRentals.Controllers
                 {
                     HttpContext.Session.SetString("CustomerEmail", customer.Email);
                     HttpContext.Session.SetInt32("CustomerId", customer.Id);
+
+                    // Check if redirect flag exists in session
+                    var redirectToBooking = HttpContext.Session.GetString("RedirectToBooking");
+                    if (!string.IsNullOrEmpty(redirectToBooking))
+                    {
+                        HttpContext.Session.Remove("RedirectToBooking");
+                        return RedirectToAction("Index", "Booking");
+                    }
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -55,8 +62,6 @@ namespace FribergCarRentals.Controllers
             return View("Index", loginRegisterViewModel);
         }
 
-
-      
         // POST: Register
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -88,6 +93,14 @@ namespace FribergCarRentals.Controllers
 
                 HttpContext.Session.SetString("CustomerEmail", newCustomer.Email);
                 HttpContext.Session.SetInt32("CustomerId", newCustomer.Id);
+
+                // Check if redirect flag exists in session
+                var redirectToBooking = HttpContext.Session.GetString("RedirectToBooking");
+                if (!string.IsNullOrEmpty(redirectToBooking))
+                {
+                    HttpContext.Session.Remove("RedirectToBooking");
+                    return RedirectToAction("Index", "Booking");
+                }
 
                 return RedirectToAction("Index", "Home");
             }

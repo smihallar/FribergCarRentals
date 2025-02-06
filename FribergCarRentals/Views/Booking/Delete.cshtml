@@ -1,6 +1,6 @@
 ﻿@model FribergCarRentals.Models.Booking
 
-<h2>Delete Booking</h2>
+<h2>Radera Bokning</h2>
 
 @if (ViewBag.ErrorMessage != null)
 {
@@ -16,16 +16,16 @@
     <input type="hidden" asp-for="IsCompleted" />
 
     <div>
-        <label asp-for="StartDate">Start Date:</label>
-        <input asp-for="StartDate" readonly />
+        <label>Startdatum:</label>
+        <span>@Model.StartDate.ToShortDateString()</span>
     </div>
     <div>
-        <label asp-for="EndDate">End Date:</label>
-        <input asp-for="EndDate" readonly />
+        <label>Slutdatum:</label>
+        <span>@Model.EndDate.ToShortDateString()</span>
     </div>
     <div>
-        <label asp-for="TotalCost">Total Cost:</label>
-        <input asp-for="TotalCost" readonly />
+        <label>Total kostnad:</label>
+        <span>@Model.TotalCost.ToString("C")</span>
     </div>
-    <button type="submit" class="btn btn-danger">Delete</button>
+    <button type="submit" class="btn btn-danger">Radera</button>
 </form>

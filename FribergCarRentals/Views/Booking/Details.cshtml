@@ -4,56 +4,56 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detaljer</h1>
 
 <div>
-    <h4>Booking</h4>
+    <h4>Bokning</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Car.Name)
+        <dt class="col-sm-2">
+            Bilmodell
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Car.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.StartDate)
+        <dt class="col-sm-2">
+            Startdatum
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Booking.StartDate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.EndDate)
+        <dt class="col-sm-2">
+            Slutdatum
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Booking.EndDate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.IsCompleted)
+        <dt class="col-sm-2">
+            Bokningen avslutad
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Booking.IsCompleted)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Booking.TotalCost)
+        <dt class="col-sm-2">
+            Totalkostnad
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Booking.TotalCost)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer.FirstName)
+            Förnamn
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Customer.FirstName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer.LastName)
+            Efternamn
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Customer.LastName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer.Email)
+            Email
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Customer.Email)
@@ -61,5 +61,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="List">Back to List</a>
+    <a asp-action="List">Tillbaka till listan</a>
 </div>

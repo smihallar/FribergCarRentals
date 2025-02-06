@@ -6,9 +6,6 @@
 
 <h1>List</h1>
 
-<p>
-   
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -37,8 +34,8 @@
                 @Html.DisplayFor(modelItem => item.TotalCost)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
             </td>
         </tr>
 }

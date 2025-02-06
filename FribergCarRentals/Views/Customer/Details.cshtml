@@ -4,32 +4,31 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Kunddetaljer</h1>
 
 <div>
-    <h4>Customer</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
+            Förnamn
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FirstName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
+            Efternamn
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LastName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
+            Lösenord
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Password)
@@ -37,6 +36,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Ändra</a> |
+    <a asp-action="Index">Tillbaka till listan</a>
 </div>

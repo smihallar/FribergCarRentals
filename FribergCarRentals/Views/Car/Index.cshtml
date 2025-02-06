@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<FribergCarRentals.Models.Car>
 
-<h1>Available Cars</h1>
+<h1>Tillgängliga bilar</h1>
 
 @foreach (var car in Model)
 {
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="card-title">@car.Name</h5>
-            <p class="card-text">Price per day: @car.PricePerDay.ToString("C")</p>
-            <a href="@Url.Action("Details", "Car", new { id = car.Id })" class="btn btn-primary">View Details</a>
+            <p class="card-text">Pris per dag: @car.PricePerDay.ToString("C")</p>
+            <a href="@Url.Action("Details", "Car", new { id = car.Id })" class="btn btn-primary">Se detaljer</a>
         </div>
     </div>
 }

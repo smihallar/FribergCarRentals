@@ -62,7 +62,7 @@ namespace FribergCarRentals.Data
                 return new List<string>();
             }
 
-            // Ensure each link is a valid URL (optional)
+
             for (int i = 0; i < imageLinks.Count; i++)
             {
                 if (!Uri.IsWellFormedUriString(imageLinks[i], UriKind.Absolute))

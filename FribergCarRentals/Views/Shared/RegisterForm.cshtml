@@ -2,7 +2,7 @@
 @model RegisterViewModel
 
 <div class="col-md-6">
-    <h4>Register</h4>
+    <h4>Registrera</h4>
     @if (ViewBag.RegisterErrorMessage != null)
     {
         <div class="alert alert-danger">
@@ -12,13 +12,13 @@
     <form asp-action="Register" asp-controller="LoginRegister" method="post">
         <div asp-validation-summary="ModelOnly" class=text-danger></div>
         <div class="form-group">
-            <label for="FirstName">First Name</label>
+            <label for="FirstName">Förnamn</label>
             <input type="text" asp-for="FirstName" class="form-control" /> 
             <span asp-validation-for="FirstName" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label for="LastName">Last Name</label>
+            <label for="LastName">Efternamn</label>
             <input type="text" asp-for="LastName" class="form-control" />
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="form-group">
-            <label for="Register_Password">Password</label>
+            <label for="Register_Password">Lösenord</label>
             <input type="password" asp-for="Password" class="form-control" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>

@@ -4,12 +4,12 @@
 
 <form asp-action="Index" method="post">
     <div class="form-group">
-        <label asp-for="StartDate">Start Date</label>
+        <label asp-for="StartDate">Startdatum</label>
         <input asp-for="StartDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="StartDate" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="StartTime">Start Time</label>
+        <label asp-for="StartTime">Starttid</label>
         <select asp-for="StartTime" class="form-control">
             @for (int hour = 0; hour < 24; hour++)
             {
@@ -19,12 +19,12 @@
         <span asp-validation-for="StartTime" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="EndDate">End Date</label>
+        <label asp-for="EndDate">Slutdatum</label>
         <input asp-for="EndDate" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="EndDate" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="EndTime">End Time</label>
+        <label asp-for="EndTime">Sluttid</label>
         <select asp-for="EndTime" class="form-control">
             @for (int hour = 0; hour < 24; hour++)
             {
@@ -33,12 +33,12 @@
         </select>
         <span asp-validation-for="EndTime" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Check Availability</button>
+    <button type="submit" class="btn btn-primary">Se tillgängliga bilar</button>
 </form>
 
 @if (Model.AvailableCars.Any())
 {
-    <h2>Available Cars</h2>
+    <h2>Välj en bil</h2>
     <form asp-action="Create" method="post">
         <input type="hidden" asp-for="StartDate" />
         <input type="hidden" asp-for="StartTime" />
@@ -72,11 +72,11 @@
                         }
                         <div class="card-body">
                             <h5 class="card-title">@car.Name</h5>
-                            <p class="card-text">Price per day: @car.PricePerDay.ToString("C")</p>
+                            <p class="card-text">Pris per dag: @car.PricePerDay.ToString("C")</p>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="SelectedCarId" value="@car.Id" id="car-@car.Id" />
                                 <label class="form-check-label" for="car-@car.Id">
-                                    Select this car
+                                    Välj denna bilen
                                 </label>
                             </div>
                         </div>
@@ -84,6 +84,6 @@
                 </div>
             }
         </div>
-        <button type="submit" class="btn btn-primary">Book Car</button>
+        <button type="submit" class="btn btn-primary">Boka bil</button>
     </form>
 }
