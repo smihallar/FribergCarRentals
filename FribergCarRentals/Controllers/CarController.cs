@@ -80,13 +80,14 @@ namespace FribergCarRentals.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(Car car)
         {
-            if (!bookingRepository.GetAll().Any(b => b.CarId == car.Id))
+            var existingCar = carRepository.GetById(car.Id);
+            if (!bookingRepository.GetAll().Any(b => b.CarId == existingCar.Id))
             {
-                carRepository.Delete(car.Id);
+                carRepository.Delete(existingCar.Id);
                 return RedirectToAction("List", "Car");
             }
             ViewBag.DeleteCarMessage = "Bilen kan inte tas bort";
-            return View(car);
+            return View(existingCar);
         }
 
         public IActionResult List()

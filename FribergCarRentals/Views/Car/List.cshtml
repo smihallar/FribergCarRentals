@@ -7,22 +7,22 @@
 <h1>Bilar</h1>
 
 <p>
-    <a asp-action="Create">Skapa ny bil</a>
+    <a asp-action="Create" class="btn btn-primary">Skapa ny bil</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ImageLinks)
+                Bilder
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Modell
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PricePerDay)
+                Pris per dag
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsAvailable)
+                Bil tillgänglig
             </th>
             <th></th>
         </tr>
@@ -31,7 +31,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageLinks)
+                @foreach (var imageUrl in item.ImageLinks)
+                {
+                    <img src="@imageUrl" alt="Bild på bil" class="img-thumbnail" style="max-width: 100px; max-height: 100px;" />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -43,9 +46,15 @@
                 @Html.DisplayFor(modelItem => item.IsAvailable)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Ändra</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+                <form asp-action="Edit" asp-route-id="@item.Id" method="get" class="d-inline">
+                    <button type="submit" class="btn btn-primary">Ändra</button>
+                </form>
+                <form asp-action="Details" asp-route-id="@item.Id" method="get" class="d-inline">
+                    <button type="submit" class="btn btn-secondary">Detaljer</button>
+                </form>
+                <form asp-action="Delete" asp-route-id="@item.Id" method="get" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Radera</button>
+                </form>
             </td>
         </tr>
 }

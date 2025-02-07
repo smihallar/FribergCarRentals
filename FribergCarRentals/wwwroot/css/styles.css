@@ -13,11 +13,13 @@ body {
     color: var(--dark-grey);
     background-color: white;
     font-family: 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+html, body {
+    height: 100%;
 }
 
-h1 {
- 
-}
 .logo {
     max-height: 70px;
     max-width: 150px;
@@ -64,3 +66,16 @@ h1 {
         background-color: var(--light-danger) !important;
         border-color: var(--light-danger) !important;
     }
+
+footer {
+    background-color: #f8f9fa !important;
+    margin-top: auto !important;
+}
+
+h4 {
+    margin-top: 10px;
+    
+}
+
+
+

@@ -18,6 +18,7 @@ namespace FribergCarRentals.Controllers
         }
         // GET: AdminController
         public IActionResult Index()
+        
         {
             if (!IsAdminLoggedIn())
             {

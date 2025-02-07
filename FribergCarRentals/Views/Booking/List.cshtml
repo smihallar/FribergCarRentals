@@ -10,13 +10,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                Startdatum
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                Slutdatum
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TotalCost)
+                Totalkostnad
             </th>
             <th></th>
         </tr>
@@ -34,8 +34,12 @@
                 @Html.DisplayFor(modelItem => item.TotalCost)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Radera</a>
+                    <form asp-action="Details" asp-route-id="@item.Id" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-secondary">Detaljer</button>
+                    </form>
+                    <form asp-action="Delete" asp-route-id="@item.Id" method="get" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Radera</button>
+                    </form>
             </td>
         </tr>
 }
