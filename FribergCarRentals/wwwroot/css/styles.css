@@ -3,16 +3,18 @@
     --secondary: #FBC337;
     --tertiary: #FDD163;
     --light-grey: #9CA8AE;
-    --medium-grey: #6a6e70;
-    --dark-grey: #5A5A5A;
+    --medium-grey: #55626a;
+    --dark-grey: #353d42;
     --danger: #E45521;
     --light-danger: #e27851;
+    --background: #e1eaef;
+    --text: #ecf3f7;
 }
 
 body {
     color: var(--dark-grey);
-    background-color: white;
-    font-family: 'Trebuchet MS', sans-serif;
+    background-color: var(--background);
+    font-family: Bahnschrift, sans-serif;
     display: flex;
     flex-direction: column;
 }
@@ -30,26 +32,35 @@ html, body {
 
 .navbar {
     background-color: var(--medium-grey) !important;
-    color: white !important;
+    
 }
 
-.navbar .nav-link {
-        color: white !important;
-}
+    .navbar .nav-link {
+        color: var(--background) !important;
+        font-family: 'Agency FB', sans-serif;
+        font-weight: bold;
+        font-size: larger;
+    }
 
 .btn-primary {
     background-color: var(--primary) !important;
     border-color: var(--primary) !important;
+
+    font-weight: bold;
 }
 
     .btn-primary:hover {
         background-color: var(--secondary) !important;
         border-color: var(--secondary) !important;
+        
     }
 
 .btn-secondary {
     background-color: var(--dark-grey) !important;
     border-color: var(--dark-grey) !important;
+
+    
+    font-weight: bold;
 }
 
 .btn.btn-secondary:hover {
@@ -60,6 +71,7 @@ html, body {
 .btn-danger {
     background-color: var(--danger) !important;
     border-color: var(--danger) !important;
+
 }
 
     .btn-danger:hover {
@@ -68,14 +80,26 @@ html, body {
     }
 
 footer {
-    background-color: #f8f9fa !important;
-    margin-top: auto !important;
+    background-color: white !important;
+    margin-top: 5px !important;
 }
 
-h4 {
-    margin-top: 10px;
-    
+.car-image {
+    height: auto;
+    width: auto;
 }
 
+h1 {
+   
+    font-family: 'Agency FB', sans-serif;
+    font-weight: bolder;
+}
 
-
+.primary-banner {
+    background-color: var(--primary);
+    color: var(--text);
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+}

@@ -1,5 +1,26 @@
-﻿
-<div class="text-center">
-    <h1 class="display-4">Välkommen till Friberg Car Rentals</h1>
-    <h4>Här kan du boka en bil, se dina tidigare bokningar eller ta en titt på våra tillgängliga bilar!</h4>
+﻿<div class="text-center">
+
+
+    <img src="~/images/logo.png" alt="Friberg Car Rentals Logo" class="img-fluid my-4" style="max-width: 300px;" />
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Boka en bil</h5>
+                    <p class="card-text">Boka en bil för din nästa resa.</p>
+                    <a href="@Url.Action("Index", "Booking")" class="btn btn-primary">BOKA BIL</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Fribergs bilar</h5>
+                    <p class="card-text">Se våra tillgängliga bilar.</p>
+                    <a href="@Url.Action("Index", "Car")" class="btn btn-primary">FRIBERGS BILAR</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

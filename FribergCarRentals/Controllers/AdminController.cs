@@ -58,7 +58,7 @@ namespace FribergCarRentals.Controllers
 
 
                     ViewData["ControllerName"] = "Admin";
-                    return View("Index", model);
+                    return View("LoginForm", model);
                 }
             }
             else
