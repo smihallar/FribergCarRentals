@@ -26,7 +26,7 @@ namespace FribergCarRentals.Data
 
         public IEnumerable<Booking> GetAll()
         {
-            return applicationDbContext.Bookings.ToList();
+            return applicationDbContext.Bookings.ToList().OrderBy(b=>b.StartDate);
         }
 
         public Booking GetById(int id)

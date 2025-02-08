@@ -33,11 +33,14 @@
         </select>
         <span asp-validation-for="EndTime" class="text-danger"></span>
     </div>
+    <br />
     <button type="submit" class="btn btn-primary">Se tillgängliga bilar</button>
+    
 </form>
 
 @if (Model.AvailableCars.Any())
 {
+    <br />
     <h2>Välj en bil</h2>
     <form asp-action="Create" method="post">
         <input type="hidden" asp-for="StartDate" />
