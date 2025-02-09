@@ -98,7 +98,12 @@ namespace FribergCarRentals.Controllers
 
         public IActionResult Edit(int id)
         {
-            return View(carRepository.GetById(id));
+            var car = carRepository.GetById(id);
+            if (car == null)
+            {
+                return NotFound();
+            }
+            return View(car);
         }
 
         [HttpPost]
@@ -109,17 +114,38 @@ namespace FribergCarRentals.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    carRepository.Update(car);
+                    var existingCar = carRepository.GetById(car.Id);
+                    if (existingCar == null)
+                    {
+                        return NotFound();
+                    }
+
+              
+                    if (bookingRepository.GetAll().Any(b => b.CarId == car.Id && !b.IsCompleted))
+                    {
+                        if (existingCar.IsAvailable != car.IsAvailable)
+                        {
+                            ViewBag.EditCarError = "Bilen kan inte markeras som otillgänglig eftersom den är bokad.";
+                            return View(car);
+                        }
+                    }
+
+                    existingCar.Name = car.Name;
+                    existingCar.PricePerDay = car.PricePerDay;
+                    existingCar.ImageLinks = car.ImageLinks;
+                    existingCar.IsAvailable = car.IsAvailable;
+
+                    carRepository.Update(existingCar);
+                    return RedirectToAction("List", "Car");
                 }
-                return RedirectToAction("List", "Car");
+                return View(car);
             }
             catch
             {
                 ViewBag.EditCarError = "Bilen kunde inte ändras.";
-                return View();
+                return View(car);
             }
         }
-
     }
 }
 

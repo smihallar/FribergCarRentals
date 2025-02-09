@@ -11,5 +11,6 @@ namespace FribergCarRentals.Data
         void Update(Customer customer);
         void AddBooking(int customerId, Booking booking);
         IEnumerable<Customer> GetAll();
+        IEnumerable<Booking> GetBookingsByCustomerId(int customerId);
     }
 }

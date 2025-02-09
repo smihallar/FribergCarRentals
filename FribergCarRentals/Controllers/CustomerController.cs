@@ -101,7 +101,7 @@ namespace FribergCarRentals.Controllers
                     customer.Password = model.Password;
 
                     customerRepository.Update(customer);
-                    return RedirectToAction("List", "Customer");
+                    return RedirectToAction("Index", "Customer");
                 }
                 return View(model);
             }
@@ -126,29 +126,32 @@ namespace FribergCarRentals.Controllers
         // POST: CustomerController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(Customer customer)
-        { 
-            if (customer != null)
+        public IActionResult Delete(int id, Customer customer)
+        {
+            var existingCustomer = customerRepository.GetById(id);
+            if (existingCustomer == null)
             {
-                if (customer.Bookings == null || !customer.Bookings.Any())
-                {
-                    customerRepository.Delete(customer);
-                    ViewBag.DeleteCustomerMessage = "Kunden har tagits bort.";
-                    return RedirectToAction("List", "Customer");
-                }
-                else
-                {
-                    customer.FirstName = "Anonym";
-                    customer.LastName = "Anonym";
-                    customer.Email = "anonym@example.se";
-                    customer.Password = "anonym";
-                    customerRepository.Update(customer);
-                    ViewBag.DeleteCustomerMessage = "Kunden har anonymiserats.";
-                    return RedirectToAction("List", "Customer");
-                }
+                return NotFound();
             }
-            ViewBag.DeleteCustomerMessage = "Kunden kunde inte tas bort.";
-            return View(customer);
+
+            existingCustomer.Bookings = customerRepository.GetBookingsByCustomerId(id).ToList();
+
+            if (existingCustomer.Bookings == null || !existingCustomer.Bookings.Any())
+            {
+                customerRepository.Delete(existingCustomer);
+                ViewBag.DeleteCustomerMessage = "Kunden har tagits bort.";
+                return RedirectToAction("Index", "Customer");
+            }
+            else
+            {
+                existingCustomer.FirstName = "Anonym";
+                existingCustomer.LastName = "Anonym";
+                existingCustomer.Email = "anonym@example.se";
+                existingCustomer.Password = "anonym";
+                customerRepository.Update(existingCustomer);
+                ViewBag.DeleteCustomerMessage = "Kunden har anonymiserats.";
+                return RedirectToAction("Index", "Customer");
+            }
         }
     }
 }

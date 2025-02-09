@@ -7,6 +7,12 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Skapa ny kund</a>
 </p>
+@if (ViewBag.DeleteCustomerMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.DeleteCustomerMessage
+    </div>
+}
 <table class="table">
     <thead>
         <tr>
@@ -38,7 +44,7 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
+               ********
             </td>
             <td>
                     <form asp-action="Edit" asp-route-id="@item.Id" method="get" class="d-inline">

@@ -1,12 +1,14 @@
 ﻿@model FribergCarRentals.Models.Customer
 
-@{
-    ViewData["Title"] = "Delete";
-}
-
 <h1>Radera kund</h1>
 
 <h3>Är du säker på att du vill radera denna kunden?</h3>
+@if (ViewBag.DeleteCustomerMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.DeleteCustomerMessage
+    </div>
+}
 <div>
     <hr />
     <dl class="row">

@@ -62,5 +62,10 @@ namespace FribergCarRentals.Data
             applicationDbContext.Update(customer);
             applicationDbContext.SaveChanges();
         }
+
+        public IEnumerable<Booking> GetBookingsByCustomerId(int customerId)
+        {
+            return applicationDbContext.Bookings.Where(b => b.CustomerId == customerId).ToList();
+        }
     }
 }

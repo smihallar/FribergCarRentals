@@ -41,7 +41,7 @@ namespace FribergCarRentals.Controllers
                 else
                 {
                     var availableCars = carRepository.GetAll()
-                        .Where(car => !bookingRepository.GetAll()
+                        .Where(car => car.IsAvailable && !bookingRepository.GetAll()
                         .Any(booking => booking.CarId == car.Id &&
                         ((startDateTime >= booking.StartDate && startDateTime <= booking.EndDate) ||
                         (endDateTime >= booking.StartDate && endDateTime <= booking.EndDate))))
@@ -120,8 +120,9 @@ namespace FribergCarRentals.Controllers
                         {
                             return NotFound();
                         }
-                        var days = (endDateTime - startDateTime).Days;
-                        model.TotalCost = car.PricePerDay * days;
+                        var totalHours = (endDateTime - startDateTime).TotalHours;
+                        var totalDays = totalHours / 24;
+                        model.TotalCost = car.PricePerDay * (decimal)totalDays;
                         var booking = new Booking
                         {
                             CarId = model.SelectedCarId,
@@ -198,7 +199,7 @@ namespace FribergCarRentals.Controllers
             var customerId = HttpContext.Session.GetInt32("CustomerId");
             var adminId = HttpContext.Session.GetInt32("AdminId");
 
-            var bookings = bookingRepository.GetAll().ToList();
+            var bookings = bookingRepository.GetAll().ToList().OrderBy(b => b.StartDate);
 
             // Update IsCompleted status
             foreach (var booking in bookings)

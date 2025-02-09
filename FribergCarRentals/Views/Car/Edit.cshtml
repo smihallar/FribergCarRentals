@@ -1,24 +1,22 @@
 ﻿@model FribergCarRentals.Models.Car
 
-@{
-    ViewData["Title"] = "Ändra bil";
-}
-@if (ViewBag.EditCarMessage != null)
+<h1>Ändra bil</h1>
+@if (ViewBag.EditCarError != null)
 {
     <div class="alert alert-danger">
-        @ViewBag.EditCarMessage
+        @ViewBag.EditCarError
     </div>
 }
-
 <h4>Bildetaljer</h4>
 <hr />
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Modell</label>
+                <label asp-for="Name" class="control-label">Namn</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
@@ -29,7 +27,7 @@
             </div>
             <div class="form-group form-check">
                 <input class="form-check-input" asp-for="IsAvailable" />
-                <label class="form-check-label" asp-for="IsAvailable"></label>
+                <label class="form-check-label" asp-for="IsAvailable">Bil tillgänglig</label>
             </div>
             <div class="form-group">
                 <label>Bildlänkar</label>
@@ -43,17 +41,22 @@
                 <br />
                 <button type="button" class="btn btn-secondary" onclick="addImageLink()">Lägg till fler länkar</button>
             </div>
+
             <div class="form-group">
-                <br />
                 <input type="submit" value="Spara" class="btn btn-primary" />
-                <a asp-action="List" class="btn btn-secondary">Tillbaka till lista</a>
             </div>
         </form>
     </div>
 </div>
 
+<div>
+    <a asp-action="List">Back to List</a>
+</div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         function addImageLink() {
             var container = document.getElementById('imageLinksContainer');
