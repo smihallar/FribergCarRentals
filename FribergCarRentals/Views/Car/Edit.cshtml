@@ -34,8 +34,12 @@
                 <div id="imageLinksContainer">
                     @for (int i = 0; i < Model.ImageLinks.Count; i++)
                     {
-                        <input asp-for="ImageLinks[i]" class="form-control mb-2" />
+                        <div class="input-group mb-2">
+                            <input asp-for="ImageLinks[i]" class="form-control" />
+                            <button type="button" class="btn btn-danger" onclick="removeImageLink(this)">Ta bort</button>
+                        </div>
                         <span asp-validation-for="ImageLinks[i]" class="text-danger"></span>
+
                     }
                 </div>
                 <br />
@@ -60,11 +64,16 @@
     <script>
         function addImageLink() {
             var container = document.getElementById('imageLinksContainer');
-            var index = container.children.length;
+            var index = container.querySelectorAll('input').length;
             var newInput = document.createElement('input');
             newInput.name = 'ImageLinks[' + index + ']';
             newInput.className = 'form-control mb-2';
             container.appendChild(newInput);
+        }
+          function removeImageLink(button) {
+            var container = document.getElementById('imageLinksContainer');
+            container.removeChild(button.parentElement);
+            updateImageLinkNames();
         }
     </script>
 }

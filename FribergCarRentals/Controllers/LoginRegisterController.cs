@@ -36,7 +36,7 @@ namespace FribergCarRentals.Controllers
                     HttpContext.Session.SetString("CustomerEmail", customer.Email);
                     HttpContext.Session.SetInt32("CustomerId", customer.Id);
 
-                    // Check if redirect flag exists in session
+                    
                     var redirectToBooking = HttpContext.Session.GetString("RedirectToBooking");
                     if (!string.IsNullOrEmpty(redirectToBooking))
                     {
@@ -55,7 +55,7 @@ namespace FribergCarRentals.Controllers
             var loginRegisterViewModel = new LoginRegisterViewModel
             {
                 Login = model,
-                Register = new RegisterViewModel() // or populate with existing data if needed
+                Register = new RegisterViewModel()
             };
 
             ViewData["ControllerName"] = "LoginRegister";
@@ -94,7 +94,7 @@ namespace FribergCarRentals.Controllers
                 HttpContext.Session.SetString("CustomerEmail", newCustomer.Email);
                 HttpContext.Session.SetInt32("CustomerId", newCustomer.Id);
 
-                // Check if redirect flag exists in session
+                
                 var redirectToBooking = HttpContext.Session.GetString("RedirectToBooking");
                 if (!string.IsNullOrEmpty(redirectToBooking))
                 {

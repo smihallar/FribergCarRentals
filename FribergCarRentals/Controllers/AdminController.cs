@@ -26,7 +26,7 @@ namespace FribergCarRentals.Controllers
             }
             return View();
         }
-        //GET: AdminController/Admin/
+        
         public IActionResult Login()
         {
             if (IsAdminLoggedIn())
